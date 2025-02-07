@@ -3,11 +3,16 @@ import pygame as pg
 from settings import *
 from map import *
 from player import *
+from raycasting import * 
+from object_renderer import *
+
+
 
 class Game:
     #create screen and set resolution from settings file
     def __init__(self):
         pg.init()
+        pg.mouse.set_visible(False)
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
         self.delta_time = 1
@@ -17,11 +22,14 @@ class Game:
     def new_game(self):
         self.map = Map(self)
         self.player = Player(self)
+        self.object_renderer = ObjectRenderer(self)
+        self.raycasting = RayCasting(self)
     
     
     #update fram info on screen
     def update(self):
         self.player.update()
+        self.raycasting.update()
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps():.1f}')
@@ -30,9 +38,11 @@ class Game:
     
     #screen iteration
     def draw(self):
-        self.screen.fill('black')
-        self.map.draw()
-        self.player.draw()
+        # self.screen.fill('black')
+        self.object_renderer.draw()
+        # self.map.draw()
+        # self.player.draw()
+    
     #event for esc key
     def check_event(self):
         for event in pg.event.get():
