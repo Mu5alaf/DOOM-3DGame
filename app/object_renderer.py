@@ -41,3 +41,4 @@ class ObjectRenderer:
             4: self.get_texture(os.path.join(base_path, '4.png')),
             5: self.get_texture(os.path.join(base_path, '5.png')),
         }
+        
